@@ -611,31 +611,6 @@ print(tokenizer.decode(outputs[0]))
 
 ---
 
-## Technical Deep Dive
-
-### A*-PO Algorithm
-
-Unlike GRPO (which requires multiple rollouts per prompt), A*-PO estimates V* offline:
-```
-GRPO:
-- Generate K rollouts per prompt
-- Compute advantages from all K rollouts
-- Update policy
-- Cost: O(K × generation_cost)
-
-A*-PO:
-- Compute V* once from reference model
-- Generate 1 rollout per prompt
-- Compute advantage vs V*
-- Update policy
-- Cost: O(1 × generation_cost) + V* overhead
-
-With caching: V* overhead → 0
-Effective cost: O(1 × generation_cost)
-```
-
-**Result**: 3-5x more sample efficient than GRPO!
-
 ### Advantage Weighting
 ```python
 # Normalized advantages for stability
@@ -695,23 +670,6 @@ pytest tests/test_data.py         # Data generation
 # Test with coverage
 pytest --cov=tinyzero tests/
 ```
-
----
-
-##  Team
-
-**Week 06 - TinyZero Implementation**
-
-- **[Nikhil Pandey]** - Project setup, A*-PO implementation, V* caching system
-- **[Anvitha]** - Data pipeline, curriculum learning
-- **[Ahsan]** - Reward functions, evaluation
-- **[Vrinda]** - Modal deployment, optimization
-- **Praneeth** - Code review, testing, documentation
-
-All team members contributed to debugging, testing, and final integration.
-
-*Northeastern University - INFO 7375: Special Topics in AI*
-
 ---
 
 ## Acknowledgments
@@ -720,8 +678,6 @@ All team members contributed to debugging, testing, and final integration.
 - **DeepSeek Research** for the R1 paper and inspiration
 - **Qwen Team** at Alibaba for the excellent base models
 - **Modal Labs** for accessible cloud GPU infrastructure
-- **Course TAs** for feedback and support
-
 ---
 
 ## License
@@ -735,8 +691,5 @@ MIT License - See LICENSE file for details
 - [DeepSeek-R1 Paper](https://arxiv.org/pdf/2501.12948)
 - [Qwen2.5 Model Card](https://huggingface.co/Qwen/Qwen2.5-3B)
 - [Modal Documentation](https://modal.com/docs)
-- [Course Materials](https://course-website-link)
 
 ---
-
-**Built with  for INFO 7375 - Self-Improving AI Systems**
